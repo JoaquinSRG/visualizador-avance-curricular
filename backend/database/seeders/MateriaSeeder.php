@@ -9,7 +9,7 @@ class MateriaSeeder extends Seeder
 {
     public function run(): void
     {
-        // Plan de estudios de ejemplo.
+        // Plan de estudios de la Licenciatura en Desarrollo de Sistemas Web
         // Cada materia indica las claves de sus prerrequisitos.
         $materias = [
             // Semestre 1
