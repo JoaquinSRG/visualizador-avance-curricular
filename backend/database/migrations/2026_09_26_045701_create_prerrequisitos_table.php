@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('prerrequisitos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('materia_id')->constrained('materias')->cascadeOnDelete();
-            $table->foreignId('prerrequisitos_id')->constrained('materias')->cascadeOnDelete();
+            $table->foreignId('prerrequisito_id')->constrained('materias')->cascadeOnDelete();
             $table->timestamps();
 
-            $table->unique(['materia_id', 'prerrequisitos_id']);
+            $table->unique(['materia_id', 'prerrequisito_id']);
         });
     }
 
