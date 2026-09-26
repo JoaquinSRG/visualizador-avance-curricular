@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { apiFetch } from "./api";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import MateriasList from "./components/MateriasList";
 import "./App.css";
 
 const TOKEN_KEY = "token";
@@ -14,6 +15,13 @@ function App() {
   );
   const [vista, setVista] = useState("login");
 
+  // Borra la sesión solo en el navegador
+  const cerrarSesionLocal = useCallback(() => {
+    localStorage.removeItem(TOKEN_KEY);
+    setToken(null);
+    setUser(null);
+  }, []);
+
   // Al abrir la app, si hay un token guardado, revisamos que siga siendo válido
   useEffect(() => {
     if (!token) return;
@@ -22,7 +30,7 @@ function App() {
       .then(setUser)
       .catch(() => cerrarSesionLocal())
       .finally(() => setCargando(false));
-  }, [token]);
+  }, [token, cerrarSesionLocal]);
 
   function iniciarSesion({ user, token }) {
     localStorage.setItem(TOKEN_KEY, token);
@@ -30,12 +38,7 @@ function App() {
     setUser(user);
   }
 
-  function cerrarSesionLocal() {
-    localStorage.removeItem(TOKEN_KEY);
-    setToken(null);
-    setUser(null);
-  }
-
+  // Cierra la sesión en Laravel y en el navegador
   async function cerrarSesion() {
     try {
       await apiFetch("/logout", { method: "POST", token });
@@ -80,7 +83,7 @@ function App() {
       </header>
 
       <main className="contenido">
-        <p>Aquí va la lista de materias (HU-01).</p>
+        <MateriasList token={token} onSesionExpirada={cerrarSesionLocal} />
       </main>
     </div>
   );
