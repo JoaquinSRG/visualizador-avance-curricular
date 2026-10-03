@@ -191,3 +191,29 @@
   padding: 0.35rem 0.6rem;
   border-radius: 6px;
 }
+
+/* Materias cursadas (HU-03) */
+.materia-cursada {
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
+
+.marcar-cursada {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: auto;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.marcar-cursada input {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.aviso {
+  margin-bottom: 1rem;
+}
