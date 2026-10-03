@@ -48,39 +48,38 @@ La app queda en `http://localhost:5173`.
 - Correo: `test@example.com`
 - Contraseña: `password`
 
+### Pruebas automáticas
+
+```bash
+cd backend
+php artisan test
+```
+
+Las pruebas usan una base de datos SQLite en memoria, por lo que no modifican los datos del proyecto. Cubren el registro, el inicio de sesión, la lista de materias y el marcado de materias cursadas.
+
 ## Endpoints de la API
 
-| Método | Ruta | Protegida | Descripción |
-|---|---|---|---|
-| POST | `/api/register` | No | Crea un usuario y regresa su token |
-| POST | `/api/login` | No | Inicia sesión y regresa un token |
-| GET | `/api/me` | Sí | Regresa el usuario de la sesión |
-| POST | `/api/logout` | Sí | Cierra la sesión (borra el token) |
-| GET | `/api/materias` | Sí | Lista las materias con sus prerrequisitos |
+| Método | Ruta                         | Protegida | Descripción                                                            |
+| ------ | ---------------------------- | --------- | ---------------------------------------------------------------------- |
+| POST   | `/api/register`              | No        | Crea un usuario y regresa su token                                     |
+| POST   | `/api/login`                 | No        | Inicia sesión y regresa un token                                       |
+| GET    | `/api/me`                    | Sí        | Regresa el usuario de la sesión                                        |
+| POST   | `/api/logout`                | Sí        | Cierra la sesión (borra el token)                                      |
+| GET    | `/api/materias`              | Sí        | Lista las materias con sus prerrequisitos y si el usuario ya las cursó |
+| POST   | `/api/materias/{id}/cursada` | Sí        | Marca una materia como cursada para el usuario de la sesión            |
+| DELETE | `/api/materias/{id}/cursada` | Sí        | Quita la marca de cursada                                              |
 
 ## Estructura
 
 ```
-backend/    API en Laravel (modelos, migraciones, seeders, controladores)
-frontend/   Interfaz en React (login, registro, lista de materias)
+backend/    API en Laravel (modelos, migraciones, seeders, controladores, pruebas)
+frontend/   Interfaz en React (login, registro, materias por semestre y avance)
+DAILY.md    Registro del Daily Scrum
 SPRINT-2.md Resumen del Sprint 2 y de su retrospectiva
 ```
 
 ## Avance del Product Backlog
 
-| ID | Historia | SP | Sprint | Estado |
-|---|---|---|---|---|
-| HT-01 | Base del backend: migraciones, modelos y seeder | 3 | 2 | ✅ Terminada |
-| HU-09 | Registro e inicio de sesión | 5 | 2 | ✅ Terminada |
-| HU-01 | Ver la lista completa de materias | 3 | 2 | ✅ Terminada |
-| HU-02 | Agrupar materias por semestre | 2 | 3 | Pendiente |
-| HU-03 | Marcar materias como cursadas | 3 | 3 | Pendiente |
-| HU-04 | Guardar el avance del estudiante | 2 | 3 | Pendiente |
-| HU-05 | Motor de validación de prerrequisitos | 8 | 4 | Pendiente |
-| HU-06 | Ver materias disponibles y bloqueadas | 5 | 5 | Pendiente |
-| HU-07 | Pruebas en distintos escenarios de avance | 5 | 5 | Pendiente |
-| HU-08 | Despliegue en un enlace web | 2 | 5 | Pendiente |
-
-## Autor
-
-Joaquín Serafín Rodríguez González, Licenciatura en Desarrollo de Sistemas Web, UDG Virtual.
+| ID    | Historia                       | SP  | Sprint | Estado |
+| ----- | ------------------------------ | --- | ------ | ------ |
+| HT-01 | Base del backend: migraciones, |
