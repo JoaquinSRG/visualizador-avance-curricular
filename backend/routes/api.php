@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvanceController;
 use App\Http\Controllers\MateriaController;
+use App\Http\Controllers\ResumenController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas públicas
@@ -17,4 +18,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/materias', [MateriaController::class, 'index']);
     Route::post('/materias/{materia}/cursada', [AvanceController::class, 'store']);
     Route::delete('/materias/{materia}/cursada', [AvanceController::class, 'destroy']);
+
+    Route::get('/resumen', [ResumenController::class, 'show']);
 });
