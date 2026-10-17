@@ -11,3 +11,13 @@
 - Qué hice: HU-03 y HU-04, marcar materias cursadas y guardarlas en la cuenta. Mensajes en español y pruebas automáticas de HT-02.
 - Qué voy a hacer: confirmar claves, créditos y prerrequisitos con el plan de estudios oficial.
 - Qué me bloquea: conseguir el documento oficial de seriación.
+
+## 2026-10-07 al 2026-10-15
+
+- No hubo avance en el proyecto. El Sprint 4 se retrasó.
+
+## 2026-10-16
+
+- Qué hice: planeación del Sprint 4. Se agregó HU-10 (resumen del avance) por la retroalimentación del Sprint 3, que pide al menos 5 funcionalidades. Motor de prerrequisitos en el backend con sus pruebas, endpoint de resumen y conexión con React.
+- Qué voy a hacer: revisión del incremento y retrospectiva del Sprint 4.
+- Qué me bloquea: nada.
