@@ -217,3 +217,125 @@
 .aviso {
   margin-bottom: 1rem;
 }
+
+/* Estado según prerrequisitos (HU-05) */
+.materia-bloqueada {
+  background: #f9fafb;
+  color: #6b7280;
+}
+
+.materia-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.estado {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.estado-cursada {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.estado-disponible {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.estado-bloqueada {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.prerrequisitos-ok {
+  color: #374151;
+  background: #f3f4f6;
+}
+
+.marcar-cursada input:disabled {
+  cursor: not-allowed;
+}
+
+/* Resumen del avance (HU-10) */
+.resumen {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.resumen-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.resumen-encabezado h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.resumen-porcentaje {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1f4e8c;
+}
+
+.barra {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0.75rem 0 1rem;
+}
+
+.barra-relleno {
+  height: 100%;
+  background: #16a34a;
+  transition: width 0.3s;
+}
+
+.resumen-datos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.dato-disponible strong {
+  color: #1e40af;
+}
+
+.dato-bloqueada strong {
+  color: #991b1b;
+}
+
+.para-inscribir {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.para-inscribir summary {
+  cursor: pointer;
+  color: #1f4e8c;
+  font-weight: 500;
+}
+
+.para-inscribir ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}

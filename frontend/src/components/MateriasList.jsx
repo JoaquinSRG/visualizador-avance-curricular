@@ -1,51 +1,70 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { apiFetch } from "../api";
+import ResumenAvance from "./ResumenAvance";
+
+const ETIQUETAS = {
+  cursada: "Cursada",
+  disponible: "Disponible",
+  bloqueada: "Bloqueada",
+};
 
 export default function MateriasList({ token, onSesionExpirada }) {
   const [materias, setMaterias] = useState([]);
+  const [resumen, setResumen] = useState(null);
   const [cargando, setCargando] = useState(true);
+  const [guardando, setGuardando] = useState(null);
   const [error, setError] = useState("");
   const [aviso, setAviso] = useState("");
 
-  useEffect(() => {
-    apiFetch("/materias", { token })
-      .then(setMaterias)
-      .catch((err) => {
-        if (err.status === 401) {
-          onSesionExpirada();
-        } else {
-          setError(err.message);
-        }
-      })
-      .finally(() => setCargando(false));
-  }, [token, onSesionExpirada]);
-
-  // Cambia el estado "cursada" de una materia en la lista
-  function actualizarCursada(id, cursada) {
-    setMaterias((actuales) =>
-      actuales.map((m) => (m.id === id ? { ...m, cursada } : m)),
-    );
-  }
-
-  // Marca o desmarca una materia y lo guarda en la cuenta del estudiante
-  async function alternarCursada(materia) {
-    const nuevoEstado = !materia.cursada;
-    setAviso("");
-    actualizarCursada(materia.id, nuevoEstado);
-
-    try {
-      await apiFetch(`/materias/${materia.id}/cursada`, {
-        method: nuevoEstado ? "POST" : "DELETE",
-        token,
-      });
-    } catch (err) {
-      // Si no se pudo guardar, se regresa al estado anterior
-      actualizarCursada(materia.id, !nuevoEstado);
+  const manejarError = useCallback(
+    (err, mostrar) => {
       if (err.status === 401) {
         onSesionExpirada();
       } else {
-        setAviso("No se pudo guardar el cambio. Intenta de nuevo.");
+        mostrar(err.message);
       }
+    },
+    [onSesionExpirada],
+  );
+
+  // Trae las materias (con su estado según prerrequisitos) y el resumen
+  const obtenerDatos = useCallback(
+    () =>
+      Promise.all([
+        apiFetch("/materias", { token }),
+        apiFetch("/resumen", { token }),
+      ]),
+    [token],
+  );
+
+  function mostrarDatos([listaMaterias, datosResumen]) {
+    setMaterias(listaMaterias);
+    setResumen(datosResumen);
+  }
+
+  useEffect(() => {
+    obtenerDatos()
+      .then(mostrarDatos)
+      .catch((err) => manejarError(err, setError))
+      .finally(() => setCargando(false));
+  }, [obtenerDatos, manejarError]);
+
+  // Marca o desmarca una materia. El backend valida los prerrequisitos (HU-05)
+  // y después se recargan los datos para actualizar qué se desbloqueó.
+  async function alternarCursada(materia) {
+    setAviso("");
+    setGuardando(materia.id);
+
+    try {
+      await apiFetch(`/materias/${materia.id}/cursada`, {
+        method: materia.cursada ? "DELETE" : "POST",
+        token,
+      });
+      mostrarDatos(await obtenerDatos());
+    } catch (err) {
+      manejarError(err, setAviso);
+    } finally {
+      setGuardando(null);
     }
   }
 
@@ -62,16 +81,11 @@ export default function MateriasList({ token, onSesionExpirada }) {
     .map(Number)
     .sort((a, b) => a - b);
 
-  const totalCursadas = materias.filter((m) => m.cursada).length;
-
   return (
     <section>
-      <h2 className="titulo-seccion">
-        Plan de estudios{" "}
-        <span className="contador">
-          {totalCursadas} de {materias.length} materias cursadas
-        </span>
-      </h2>
+      <ResumenAvance resumen={resumen} />
+
+      <h2 className="titulo-seccion">Plan de estudios</h2>
 
       {aviso && <p className="error aviso">{aviso}</p>}
 
@@ -92,12 +106,15 @@ export default function MateriasList({ token, onSesionExpirada }) {
               {delSemestre.map((materia) => (
                 <li
                   key={materia.id}
-                  className={
-                    materia.cursada ? "materia materia-cursada" : "materia"
-                  }
+                  className={`materia materia-${materia.estado}`}
                 >
                   <div className="materia-info">
-                    <span className="clave">{materia.clave}</span>
+                    <div className="materia-fila">
+                      <span className="clave">{materia.clave}</span>
+                      <span className={`estado estado-${materia.estado}`}>
+                        {ETIQUETAS[materia.estado]}
+                      </span>
+                    </div>
                     <strong>{materia.nombre}</strong>
                   </div>
 
@@ -105,20 +122,30 @@ export default function MateriasList({ token, onSesionExpirada }) {
                     <span>{materia.creditos} créditos</span>
                   </div>
 
-                  {materia.prerrequisitos.length > 0 && (
+                  {materia.estado === "bloqueada" ? (
                     <p className="prerrequisitos">
-                      Requiere:{" "}
-                      {materia.prerrequisitos.map((p) => p.nombre).join(", ")}
+                      Te falta:{" "}
+                      {materia.faltantes.map((f) => f.nombre).join(", ")}
                     </p>
+                  ) : (
+                    materia.prerrequisitos.length > 0 && (
+                      <p className="prerrequisitos prerrequisitos-ok">
+                        Requiere:{" "}
+                        {materia.prerrequisitos.map((p) => p.nombre).join(", ")}
+                      </p>
+                    )
                   )}
 
                   <label className="marcar-cursada">
                     <input
                       type="checkbox"
                       checked={materia.cursada}
+                      disabled={
+                        materia.estado === "bloqueada" || guardando !== null
+                      }
                       onChange={() => alternarCursada(materia)}
                     />
-                    Cursada
+                    {guardando === materia.id ? "Guardando..." : "Cursada"}
                   </label>
                 </li>
               ))}
