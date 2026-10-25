@@ -339,3 +339,38 @@
   flex-direction: column;
   gap: 0.25rem;
 }
+
+/* HU-06: filtro por estado */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filtro {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #374151;
+  cursor: pointer;
+}
+
+.filtro:hover {
+  background: #f3f4f6;
+}
+
+.filtro-activo,
+.filtro-activo:hover {
+  background: #1e40af;
+  border-color: #1e40af;
+  color: #ffffff;
+}
+
+.sin-resultados {
+  color: #6b7280;
+  font-style: italic;
+}

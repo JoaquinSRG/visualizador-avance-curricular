@@ -8,6 +8,14 @@ const ETIQUETAS = {
   bloqueada: "Bloqueada",
 };
 
+// HU-06: opciones del filtro por estado
+const FILTROS = [
+  { valor: "todas", texto: "Todas" },
+  { valor: "disponible", texto: "Disponibles" },
+  { valor: "bloqueada", texto: "Bloqueadas" },
+  { valor: "cursada", texto: "Cursadas" },
+];
+
 export default function MateriasList({ token, onSesionExpirada }) {
   const [materias, setMaterias] = useState([]);
   const [resumen, setResumen] = useState(null);
@@ -15,6 +23,7 @@ export default function MateriasList({ token, onSesionExpirada }) {
   const [guardando, setGuardando] = useState(null);
   const [error, setError] = useState("");
   const [aviso, setAviso] = useState("");
+  const [filtro, setFiltro] = useState("todas");
 
   const manejarError = useCallback(
     (err, mostrar) => {
@@ -71,8 +80,22 @@ export default function MateriasList({ token, onSesionExpirada }) {
   if (cargando) return <p>Cargando materias...</p>;
   if (error) return <p className="error">{error}</p>;
 
+  // HU-06: cuántas materias hay en cada estado, para mostrarlo en el filtro
+  const conteo = materias.reduce(
+    (cuenta, materia) => {
+      cuenta[materia.estado]++;
+      return cuenta;
+    },
+    { todas: materias.length, cursada: 0, disponible: 0, bloqueada: 0 },
+  );
+
+  const visibles =
+    filtro === "todas"
+      ? materias
+      : materias.filter((materia) => materia.estado === filtro);
+
   // Agrupa las materias por semestre: { 1: [...], 2: [...], ... }
-  const porSemestre = materias.reduce((grupos, materia) => {
+  const porSemestre = visibles.reduce((grupos, materia) => {
     (grupos[materia.semestre] ??= []).push(materia);
     return grupos;
   }, {});
@@ -87,18 +110,43 @@ export default function MateriasList({ token, onSesionExpirada }) {
 
       <h2 className="titulo-seccion">Plan de estudios</h2>
 
+      <div className="filtros" role="group" aria-label="Filtrar por estado">
+        {FILTROS.map(({ valor, texto }) => (
+          <button
+            key={valor}
+            type="button"
+            className={`filtro filtro-${valor}${filtro === valor ? " filtro-activo" : ""}`}
+            aria-pressed={filtro === valor}
+            onClick={() => setFiltro(valor)}
+          >
+            {texto} ({conteo[valor]})
+          </button>
+        ))}
+      </div>
+
       {aviso && <p className="error aviso">{aviso}</p>}
+
+      {visibles.length === 0 && (
+        <p className="sin-resultados">
+          No hay materias con el estado seleccionado.
+        </p>
+      )}
 
       {semestres.map((semestre) => {
         const delSemestre = porSemestre[semestre];
-        const cursadasSemestre = delSemestre.filter((m) => m.cursada).length;
+        const totalSemestre = materias.filter(
+          (m) => m.semestre === semestre,
+        ).length;
+        const cursadasSemestre = materias.filter(
+          (m) => m.semestre === semestre && m.cursada,
+        ).length;
 
         return (
           <section key={semestre} className="semestre">
             <h3 className="semestre-titulo">
               Semestre {semestre}{" "}
               <span className="contador">
-                {cursadasSemestre} de {delSemestre.length} cursadas
+                {cursadasSemestre} de {totalSemestre} cursadas
               </span>
             </h3>
 
