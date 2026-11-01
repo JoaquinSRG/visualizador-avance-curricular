@@ -21,3 +21,23 @@
 - Qué hice: planeación del Sprint 4. Se agregó HU-10 (resumen del avance) por la retroalimentación del Sprint 3, que pide al menos 5 funcionalidades. Motor de prerrequisitos en el backend con sus pruebas, endpoint de resumen y conexión con React.
 - Qué voy a hacer: revisión del incremento y retrospectiva del Sprint 4.
 - Qué me bloquea: nada.
+
+## 2026-10-17 al 2026-10-23
+
+- No hubo avance en el proyecto. El Sprint 5 se retrasó.
+
+## 2026-10-24
+
+- Qué hice: planeación del Sprint 5. HU-08, backend publicado en Render y sitio completo en línea. HU-06, filtro por estado. HU-07, pruebas de escenarios. Revisión y retrospectiva del Sprint 5.
+- Qué voy a hacer: ajustes del Sprint 6.
+- Qué me bloquea: nada.
+
+## 2026-10-25 al 2026-10-31
+
+- No hubo avance en el proyecto. El Sprint 6 se retrasó.
+
+## 2026-11-01
+
+- Qué hice: planeación del Sprint 6. HT-03, arranque del servidor sin borrar la base de datos. HU-11, aviso de servidor despertando. HT-04, documentación final. Revisión y retrospectiva del Sprint 6.
+- Qué voy a hacer: entregar la actividad del sexto sprint.
+- Qué me bloquea: nada.

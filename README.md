@@ -11,6 +11,15 @@ Proyecto de la materia **Proyecto VII**, desarrollado con la metodología **Scru
 3. **Marcar materias cursadas.** El estudiante marca o desmarca lo que ya aprobó y el avance se guarda en su cuenta.
 4. **Validación de prerrequisitos.** Cada materia aparece como Cursada, Disponible o Bloqueada, y las bloqueadas indican qué materia falta. No se puede marcar una materia bloqueada ni desmarcar una que es requisito de otra ya marcada.
 5. **Resumen del avance.** Porcentaje de la carrera, créditos acumulados, número de materias disponibles y bloqueadas, y la lista de materias que el estudiante ya puede inscribir.
+6. **Filtro por estado.** El estudiante puede ver solo las materias disponibles, bloqueadas o cursadas.
+7. **Aviso de servidor despertando.** Si el servidor tarda en responder al iniciar sesión o registrarse, se muestra un mensaje que lo explica.
+
+## Sitio en línea
+
+- Sitio: https://joaquinsrg.github.io/visualizador-avance-curricular/
+- API: https://visualizador-avance-curricular.onrender.com/api
+
+El backend está en el plan gratuito de Render: se apaga cuando no se usa y la primera petición puede tardar hasta un minuto. Además, ese plan no guarda archivos entre reinicios, así que las cuentas registradas en la base SQLite se pierden cuando el servicio se reinicia.
 
 ## Stack
 
@@ -63,7 +72,7 @@ cd backend
 php artisan test
 ```
 
-Las pruebas usan una base de datos SQLite en memoria, por lo que no modifican los datos del proyecto. Cubren el registro, el inicio de sesión, la lista de materias, el marcado de materias cursadas, el motor de prerrequisitos y el resumen del avance.
+Las pruebas usan una base de datos SQLite en memoria, por lo que no modifican los datos del proyecto. Cubren el registro, el inicio de sesión, la lista de materias, el marcado de materias cursadas, el motor de prerrequisitos, el resumen del avance y tres escenarios de avance (estudiante nuevo, a la mitad y carrera completa). El detalle está en `PRUEBAS.md`.
 
 ## Endpoints de la API
 
@@ -87,6 +96,9 @@ DAILY.md    Registro del Daily Scrum
 SPRINT-2.md Resumen del Sprint 2 y de su retrospectiva
 SPRINT-3.md Resumen del Sprint 3 y de su retrospectiva
 SPRINT-4.md Resumen del Sprint 4 y de su retrospectiva
+SPRINT-5.md Resumen del Sprint 5 y de su retrospectiva
+SPRINT-6.md Resumen del Sprint 6 y de su retrospectiva
+PRUEBAS.md  Reporte de las pruebas automáticas
 ```
 
 ## Avance del Product Backlog
@@ -102,11 +114,14 @@ SPRINT-4.md Resumen del Sprint 4 y de su retrospectiva
 | HT-02 | Mensajes de validación en español y pruebas automáticas | 2   | 3      | ✅ Terminada |
 | HU-05 | Motor de validación de prerrequisitos                   | 8   | 4      | ✅ Terminada |
 | HU-10 | Resumen del avance del estudiante                       | 2   | 4      | ✅ Terminada |
-| HU-06 | Filtrar materias disponibles y bloqueadas               | 3   | 5      | Pendiente    |
-| HU-07 | Pruebas en distintos escenarios de avance               | 5   | 5      | Pendiente    |
-| HU-08 | Despliegue en un enlace web (falta el backend)          | 2   | 5      | En proceso   |
+| HU-06 | Filtrar materias disponibles y bloqueadas               | 3   | 5      | ✅ Terminada |
+| HU-07 | Pruebas en distintos escenarios de avance               | 5   | 5      | ✅ Terminada |
+| HU-08 | Despliegue en un enlace web                             | 2   | 5      | ✅ Terminada |
+| HT-03 | Arranque del servidor sin borrar la base de datos       | 1   | 6      | ✅ Terminada |
+| HU-11 | Aviso cuando el servidor está despertando               | 2   | 6      | ✅ Terminada |
+| HT-04 | Documentación final                                     | 2   | 6      | ✅ Terminada |
 
-Avance: 30 de 40 story points terminados.
+Avance: 45 de 45 story points terminados (100%).
 
 Nota: las claves de las materias, los créditos y algunos prerrequisitos son provisionales, porque no se cuenta con el documento oficial de seriación. Todos esos datos viven en `backend/database/seeders/MateriaSeeder.php`.
 
