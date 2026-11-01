@@ -8,4 +8,4 @@ WORKDIR /app
 COPY . .
 RUN composer install --optimize-autoloader --no-interaction
 
-CMD sh -c "touch database/database.sqlite && php artisan migrate:fresh --seed --force && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"
+CMD sh -c "touch database/database.sqlite && php artisan migrate --force && php artisan
