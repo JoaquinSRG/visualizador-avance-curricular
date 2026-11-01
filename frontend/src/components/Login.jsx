@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { apiFetch } from "../api";
+import { useAvisoLento } from "../useAvisoLento";
 
 export default function Login({ onLogin, onIrARegistro }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [enviando, setEnviando] = useState(false);
+  const lento = useAvisoLento(enviando);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -50,6 +52,13 @@ export default function Login({ onLogin, onIrARegistro }) {
       </label>
 
       {error && <p className="error">{error}</p>}
+      {lento && (
+        <p className="aviso">
+          {" "}
+          El servidor esta despertando, la primera vez puede tardar hasta un
+          minuto
+        </p>
+      )}
 
       <button type="submit" disabled={enviando}>
         {enviando ? "Entrando..." : "Entrar"}

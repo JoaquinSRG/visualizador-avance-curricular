@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { apiFetch } from "../api";
+import { useAvisoLento } from "../useAvisoLento";
 
 export default function Register({ onRegister, onIrALogin }) {
   const [form, setForm] = useState({
@@ -10,6 +11,7 @@ export default function Register({ onRegister, onIrALogin }) {
   });
   const [error, setError] = useState("");
   const [enviando, setEnviando] = useState(false);
+  const lento = useAvisoLento(enviando);
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -76,6 +78,12 @@ export default function Register({ onRegister, onIrALogin }) {
       </label>
 
       {error && <p className="error">{error}</p>}
+      {lento && (
+        <p className="aviso">
+          El servidor está despertando, la primera vez puede tardar hasta un
+          minuto.
+        </p>
+      )}
 
       <button type="submit" disabled={enviando}>
         {enviando ? "Creando cuenta..." : "Registrarme"}
