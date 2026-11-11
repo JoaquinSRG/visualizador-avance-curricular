@@ -3,9 +3,20 @@ import { apiFetch } from "./api";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import MateriasList from "./components/MateriasList";
+import Kardex from "./components/Kardex";
+import Seriacion from "./components/Seriacion";
+import Propuesta from "./components/Propuesta";
 import "./App.css";
 
 const TOKEN_KEY = "token";
+
+// HU-12: secciones del menú principal
+const SECCIONES = [
+  { valor: "plan", texto: "Plan de estudios" },
+  { valor: "kardex", texto: "Kárdex" },
+  { valor: "seriacion", texto: "Requisitos y seriación" },
+  { valor: "propuesta", texto: "Propuesta de inscripción" },
+];
 
 function App() {
   const [token, setToken] = useState(() => localStorage.getItem(TOKEN_KEY));
@@ -14,6 +25,8 @@ function App() {
     Boolean(localStorage.getItem(TOKEN_KEY)),
   );
   const [vista, setVista] = useState("login");
+  const [seccion, setSeccion] = useState("plan");
+  const [materiaSeleccionada, setMateriaSeleccionada] = useState(null);
 
   // Borra la sesión solo en el navegador
   const cerrarSesionLocal = useCallback(() => {
@@ -45,7 +58,14 @@ function App() {
     } finally {
       cerrarSesionLocal();
       setVista("login");
+      setSeccion("plan");
     }
+  }
+
+  // Desde el plan de estudios se puede abrir la seriación de una materia
+  function verSeriacion(materiaId) {
+    setMateriaSeleccionada(materiaId);
+    setSeccion("seriacion");
   }
 
   if (cargando) {
@@ -82,8 +102,41 @@ function App() {
         </div>
       </header>
 
+      <nav className="menu" aria-label="Secciones">
+        {SECCIONES.map(({ valor, texto }) => (
+          <button
+            key={valor}
+            type="button"
+            className={`menu-opcion${seccion === valor ? " menu-activo" : ""}`}
+            aria-current={seccion === valor ? "page" : undefined}
+            onClick={() => setSeccion(valor)}
+          >
+            {texto}
+          </button>
+        ))}
+      </nav>
+
       <main className="contenido">
-        <MateriasList token={token} onSesionExpirada={cerrarSesionLocal} />
+        {seccion === "plan" && (
+          <MateriasList
+            token={token}
+            onSesionExpirada={cerrarSesionLocal}
+            onVerSeriacion={verSeriacion}
+          />
+        )}
+        {seccion === "kardex" && (
+          <Kardex token={token} onSesionExpirada={cerrarSesionLocal} />
+        )}
+        {seccion === "seriacion" && (
+          <Seriacion
+            token={token}
+            onSesionExpirada={cerrarSesionLocal}
+            materiaInicial={materiaSeleccionada}
+          />
+        )}
+        {seccion === "propuesta" && (
+          <Propuesta token={token} onSesionExpirada={cerrarSesionLocal} />
+        )}
       </main>
     </div>
   );

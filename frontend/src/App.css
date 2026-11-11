@@ -380,3 +380,208 @@
   color: #6b7280;
   font-style: italic;
 }
+
+/* HU-12: menú de secciones */
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0 1.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.menu-opcion {
+  padding: 0.8rem 1rem;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: #374151;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.menu-opcion:hover {
+  color: #1f4e8c;
+}
+
+.menu-activo {
+  color: #1f4e8c;
+  border-bottom-color: #1f4e8c;
+}
+
+.ver-seriacion {
+  align-self: flex-start;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* Reportes (kárdex y propuesta) */
+.reporte-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.reporte-encabezado .titulo-seccion {
+  margin-bottom: 0.25rem;
+}
+
+.reporte-encabezado p {
+  margin: 0;
+}
+
+.boton-imprimir {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #1f4e8c;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* HU-13: kárdex */
+.tarjetas {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.tarjetas li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.9rem 1rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.tarjetas strong {
+  font-size: 1.3rem;
+  color: #1f4e8c;
+}
+
+.tabla-kardex {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  font-size: 0.9rem;
+}
+
+.tabla-kardex th,
+.tabla-kardex td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.tabla-kardex th {
+  background: #f3f4f6;
+}
+
+.input-calificacion {
+  width: 5rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.solo-impresion {
+  display: none;
+}
+
+/* HU-14: seriación */
+.selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-width: 520px;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.selector select {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.detalle-seriacion {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detalle-seriacion h3 {
+  margin: 0;
+}
+
+.detalle-seriacion h4 {
+  margin: 1rem 0 0.5rem;
+}
+
+.lista-seriacion {
+  margin: 0 0 1.5rem;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.lista-seriacion .cumplido {
+  color: #166534;
+}
+
+.lista-seriacion .pendiente {
+  color: #991b1b;
+}
+
+/* HU-15: propuesta de inscripción */
+.lista-propuesta {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem 1rem 1rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.total-propuesta {
+  font-weight: 700;
+  color: #1f4e8c;
+}
+
+/* Al imprimir solo se ve el reporte */
+@media print {
+  .topbar,
+  .menu,
+  .boton-imprimir,
+  .no-imprimir,
+  .input-calificacion {
+    display: none;
+  }
+
+  .solo-impresion {
+    display: inline;
+  }
+
+  .contenido {
+    padding: 0;
+  }
+}
