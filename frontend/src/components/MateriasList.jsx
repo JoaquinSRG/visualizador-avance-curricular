@@ -16,7 +16,11 @@ const FILTROS = [
   { valor: "cursada", texto: "Cursadas" },
 ];
 
-export default function MateriasList({ token, onSesionExpirada }) {
+export default function MateriasList({
+  token,
+  onSesionExpirada,
+  onVerSeriacion,
+}) {
   const [materias, setMaterias] = useState([]);
   const [resumen, setResumen] = useState(null);
   const [cargando, setCargando] = useState(true);
@@ -184,6 +188,13 @@ export default function MateriasList({ token, onSesionExpirada }) {
                     )
                   )}
 
+                  <button
+                    type="button"
+                    className="link ver-seriacion"
+                    onClick={() => onVerSeriacion(materia.id)}
+                  >
+                    Ver requisitos y seriación
+                  </button>
                   <label className="marcar-cursada">
                     <input
                       type="checkbox"
