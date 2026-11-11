@@ -6,6 +6,8 @@ Proyecto de la materia **Proyecto VII**, desarrollado con la metodología **Scru
 
 ## Funcionalidades
 
+El sitio tiene un menú con cuatro secciones: Plan de estudios, Kárdex, Requisitos y seriación, y Propuesta de inscripción.
+
 1. **Registro e inicio de sesión.** Cada estudiante tiene su cuenta y su avance es privado.
 2. **Plan de estudios por semestre.** Las 44 materias de la carrera divididas en 8 semestres, con clave, créditos y prerrequisitos.
 3. **Marcar materias cursadas.** El estudiante marca o desmarca lo que ya aprobó y el avance se guarda en su cuenta.
@@ -13,6 +15,10 @@ Proyecto de la materia **Proyecto VII**, desarrollado con la metodología **Scru
 5. **Resumen del avance.** Porcentaje de la carrera, créditos acumulados, número de materias disponibles y bloqueadas, y la lista de materias que el estudiante ya puede inscribir.
 6. **Filtro por estado.** El estudiante puede ver solo las materias disponibles, bloqueadas o cursadas.
 7. **Aviso de servidor despertando.** Si el servidor tarda en responder al iniciar sesión o registrarse, se muestra un mensaje que lo explica.
+8. **Kárdex del alumno.** Materias cursadas por semestre con su clave, créditos y calificación, créditos cursados y faltantes, y opción para imprimirlo.
+9. **Calificaciones y promedio.** El estudiante captura la calificación de cada materia (0 a 100) y el sistema calcula el promedio por semestre y el general.
+10. **Requisitos y seriación.** Para cada materia muestra qué requisitos pide, si ya se cumplieron y qué materias seriadas se desbloquean con ella.
+11. **Reporte de propuesta de inscripción.** Propone las materias disponibles de los semestres más bajos, según cuántas quiera llevar el estudiante, con el total de créditos y opción para imprimirlo.
 
 ## Sitio en línea
 
@@ -72,7 +78,7 @@ cd backend
 php artisan test
 ```
 
-Las pruebas usan una base de datos SQLite en memoria, por lo que no modifican los datos del proyecto. Cubren el registro, el inicio de sesión, la lista de materias, el marcado de materias cursadas, el motor de prerrequisitos, el resumen del avance y tres escenarios de avance (estudiante nuevo, a la mitad y carrera completa). El detalle está en `PRUEBAS.md`.
+Las pruebas usan una base de datos SQLite en memoria, por lo que no modifican los datos del proyecto. Cubren el registro, el inicio de sesión, la lista de materias, el marcado de materias cursadas, el motor de prerrequisitos, el resumen del avance, el kárdex, la seriación, la propuesta de inscripción y tres escenarios de avance (estudiante nuevo, a la mitad y carrera completa). El detalle está en `PRUEBAS.md`.
 
 ## Endpoints de la API
 
@@ -86,18 +92,23 @@ Las pruebas usan una base de datos SQLite en memoria, por lo que no modifican lo
 | POST   | `/api/materias/{id}/cursada` | Sí        | Marca una materia como cursada. Regresa 422 si le faltan prerrequisitos                                                      |
 | DELETE | `/api/materias/{id}/cursada` | Sí        | Quita la marca de cursada. Regresa 422 si otra materia cursada depende de ella                                               |
 | GET    | `/api/resumen`               | Sí        | Resumen del avance: porcentaje, créditos, disponibles, bloqueadas y materias para inscribir                                  |
+| GET    | `/api/kardex`                | Sí        | Kárdex: materias cursadas por semestre con calificación, créditos cursados y faltantes, y promedios                          |
+| PATCH  | `/api/materias/{id}/calificacion` | Sí   | Guarda o borra la calificación (0 a 100) de una materia cursada                                                              |
+| GET    | `/api/materias/{id}/seriacion` | Sí      | Requisitos de la materia (cumplidos o no) y materias seriadas que se desbloquean con ella                                     |
+| GET    | `/api/propuesta?max_materias=6` | Sí     | Propuesta de inscripción con las materias disponibles (de 1 a 8) y el total de créditos                                      |
 
 ## Estructura
 
 ```
 backend/    API en Laravel (modelos, migraciones, seeders, controladores, pruebas)
-frontend/   Interfaz en React (login, registro, materias por semestre y avance)
+frontend/   Interfaz en React (login, registro, plan de estudios, kárdex, seriación y propuesta)
 DAILY.md    Registro del Daily Scrum
 SPRINT-2.md Resumen del Sprint 2 y de su retrospectiva
 SPRINT-3.md Resumen del Sprint 3 y de su retrospectiva
 SPRINT-4.md Resumen del Sprint 4 y de su retrospectiva
 SPRINT-5.md Resumen del Sprint 5 y de su retrospectiva
 SPRINT-6.md Resumen del Sprint 6 y de su retrospectiva
+SPRINT-7.md Resumen del Sprint 7 y de su retrospectiva
 PRUEBAS.md  Reporte de las pruebas automáticas
 ```
 
@@ -120,8 +131,12 @@ PRUEBAS.md  Reporte de las pruebas automáticas
 | HT-03 | Arranque del servidor sin borrar la base de datos       | 1   | 6      | ✅ Terminada |
 | HU-11 | Aviso cuando el servidor está despertando               | 2   | 6      | ✅ Terminada |
 | HT-04 | Documentación final                                     | 2   | 6      | ✅ Terminada |
+| HU-12 | Menú por secciones                                      | 2   | 7      | ✅ Terminada |
+| HU-13 | Kárdex del alumno con calificaciones y créditos         | 5   | 7      | ✅ Terminada |
+| HU-14 | Requisitos y materias seriadas                          | 3   | 7      | ✅ Terminada |
+| HU-15 | Reporte de propuesta de inscripción                     | 3   | 7      | ✅ Terminada |
 
-Avance: 45 de 45 story points terminados (100%).
+Avance: 58 de 58 story points terminados (100%).
 
 Nota: las claves de las materias, los créditos y algunos prerrequisitos son provisionales, porque no se cuenta con el documento oficial de seriación. Todos esos datos viven en `backend/database/seeders/MateriaSeeder.php`.
 

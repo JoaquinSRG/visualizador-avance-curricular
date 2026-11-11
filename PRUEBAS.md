@@ -1,6 +1,6 @@
 # Reporte de pruebas
 
-Las pruebas se ejecutan con `php artisan test` dentro de `backend` y usan una base de datos SQLite en memoria. Resultado al cierre del Sprint 6 (1 de noviembre de 2026): **27 pruebas, todas pasan**.
+Las pruebas se ejecutan con `php artisan test` dentro de `backend` y usan una base de datos SQLite en memoria. Resultado al cierre del Sprint 7 (10 de noviembre de 2026): **40 pruebas, todas pasan**.
 
 ## Pruebas de escenarios de avance (HU-07)
 
@@ -22,4 +22,7 @@ Archivo: `backend/tests/Feature/EscenariosTest.php`
 | `MateriasTest.php`        | 5       | Lista de materias, marcar y desmarcar, y que el avance de un estudiante no afecte a otro        |
 | `PrerrequisitosTest.php`  | 7       | Estados disponible, bloqueada y cursada, validación al marcar y desmarcar, y cadenas de prerrequisitos |
 | `ResumenTest.php`         | 3       | Resumen protegido, resumen en cero y conteo de materias y créditos                             |
+| `KardexTest.php`          | 6       | Kárdex protegido, kárdex vacío, calificaciones, créditos y promedio, guardar calificación, no calificar materias sin cursar y rango de 0 a 100 |
+| `SeriacionTest.php`       | 3       | Seriación protegida, requisitos cumplidos y pendientes, y materias que se desbloquean          |
+| `PropuestaTest.php`       | 4       | Propuesta protegida, primero las materias de semestres bajos, sin cursadas ni bloqueadas, y rango de 1 a 8 materias |
 | `ExampleTest.php` (x2)    | 2       | Pruebas de ejemplo que trae Laravel                                                            |
