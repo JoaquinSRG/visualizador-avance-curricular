@@ -29,7 +29,7 @@ class User extends Authenticatable
             'materias_cursadas',
             'user_id',
             'materia_id'
-        )->withTimestamps();
+        )->withPivot('calificacion')->withTimestamps();
     }
 
     /**

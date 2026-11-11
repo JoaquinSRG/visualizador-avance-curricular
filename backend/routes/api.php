@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvanceController;
+use App\Http\Controllers\KardexController;
 use App\Http\Controllers\MateriaController;
+use App\Http\Controllers\PropuestaController;
 use App\Http\Controllers\ResumenController;
+use App\Http\Controllers\SeriacionController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas públicas
@@ -20,4 +23,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/materias/{materia}/cursada', [AvanceController::class, 'destroy']);
 
     Route::get('/resumen', [ResumenController::class, 'show']);
+
+    // Sprint 7
+    Route::get('/kardex', [KardexController::class, 'show']);
+    Route::patch('/materias/{materia}/calificacion', [KardexController::class, 'calificar']);
+    Route::get('/materias/{materia}/seriacion', [SeriacionController::class, 'show']);
+    Route::get('/propuesta', [PropuestaController::class, 'show']);
 });
