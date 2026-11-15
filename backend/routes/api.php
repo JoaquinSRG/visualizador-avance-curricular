@@ -10,6 +10,16 @@ use App\Http\Controllers\SeriacionController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas públicas
+// Página de inicio de la API, para comprobar que está en línea
+Route::get('/', fn () => response()->json([
+    'nombre' => 'API del Visualizador de Avance Curricular',
+    'estado' => 'en línea',
+    'sitio' => 'https://joaquinsrg.github.io/visualizador-avance-curricular/',
+    'usuario_de_prueba' => [
+        'correo' => 'test@example.com',
+        'contrasena' => 'password',
+    ],
+]));
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
